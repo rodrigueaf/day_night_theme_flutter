@@ -4,7 +4,7 @@ import 'package:day_night_theme_flutter/extensions/date_time_extension.dart';
 import 'package:flutter/material.dart';
 
 class DayNightThemeChanger extends ChangeNotifier {
-  ThemeData _selectedTheme;
+  ThemeData? _selectedTheme;
 
   final ThemeData lightTheme;
 
@@ -27,7 +27,7 @@ class DayNightThemeChanger extends ChangeNotifier {
   final int sunsetMinutes;
 
   /// Timer will be required to change the theme after some time.
-  Timer _timer;
+  Timer? _timer;
 
   DayNightThemeChanger(
     this.lightTheme,
@@ -37,12 +37,6 @@ class DayNightThemeChanger extends ChangeNotifier {
     this.sunriseHour,
     this.sunriseMinutes,
   ) {
-    assert(darkTheme != null, 'darkTheme can\'t be null');
-    assert(lightTheme != null, 'lightTheme can\'t be null');
-    assert(sunsetHour != null, 'sunsetHour can\'t be null');
-    assert(sunsetMinutes != null, 'sunsetMinutes can\'t be null');
-    assert(sunriseHour != null, 'sunriseHour can\'t be null');
-    assert(sunriseMinutes != null, 'sunriseMinutes can\'t be null');
 
     DateTime now = CustomDateTime.current;
 
@@ -113,19 +107,19 @@ class DayNightThemeChanger extends ChangeNotifier {
     _selectedTheme = newTheme;
     notifyListeners();
     if (turnOffDynamicThemeChange) {
-      _timer?.cancel();
+      _timer!.cancel();
     }
   }
 
   /// Currently selected theme
-  ThemeData get selectedTheme => _selectedTheme;
+  ThemeData? get selectedTheme => _selectedTheme;
 
   /// returns true if current selected theme is light theme
   bool get isLightTheme => _selectedTheme == lightTheme;
 
   @override
   void dispose() {
-    _timer?.cancel();
+    _timer!.cancel();
     super.dispose();
   }
 }
